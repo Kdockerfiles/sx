@@ -1,0 +1,94 @@
+package "sx.fcgi"
+purpose "SX FastCGI Interface"
+args "--conf-parse --no-handle-version --file-name=cfgfile --no-handle-error"
+usage "sx.fcgi"
+
+option  "socket"		- "Set socket for connection with httpd"
+        string typestr="SOCKET" required
+
+option  "children"		- "Start N children processes"
+        int default="24" typestr="N" optional
+
+option  "reserved-socket"	- "Set httpd socket reserved for internode communication"
+        string typestr="SOCKET" optional
+
+option  "reserved-children"	- "Start N children processes reserved for internode communication"
+        int default="8" typestr="N" dependon="reserved-socket" optional
+
+option  "socket-mode"		- "Set socket mode to MODE (octal number; unix sockets only)"
+        int typestr="MODE" optional
+
+option  "data-dir"		- "Path to data directory"
+	string typestr="PATH" required
+
+option  "logfile"		- "Write all log information to FILE"
+        string typestr="FILE" required
+
+option  "pidfile"		- "Write process ID to FILE"
+        string typestr="FILE" optional
+
+option  "foreground"		- "Do not daemonize" flag off
+
+option  "debug"			- "Enable debug messages" flag off
+
+option  "run-as"                - "Run as specified user[:group]" string
+    typestr="user[:group]" optional
+
+option  "ssl_ca"                - "Path to SSL CA certificate" string optional
+
+option "gc-interval"            - "How often to run the GC"
+       int default="3600" typestr="sec" optional hidden
+
+option "gc-max-batch"           - "Maximum number of rows/transaction in the GC"
+       int default="100" typestr="N" optional hidden
+
+option "gc-max-batch-time"           - "Maximum time for a transaction in the GC in seconds"
+       float default="1" typestr="N" optional hidden
+
+option "gc-yield-time"           - "Time to yield between GC transactions"
+       float default="1.1" typestr="N" optional hidden
+
+option "gc-slow-check"           - "Run the slow GC"
+       flag off hidden
+
+option "gc-no-slow-check"           - "Don't run the slow GC (default, for backward compatibility)"
+       flag off hidden
+
+option "blockmgr-delay"       - "Blockmgr delay"
+       float default="3" typestr="sec" optional hidden
+
+option "db-min-passive-wal-pages"  - "Minimum number of pages in WAL to trigger a passive checkpoint"
+       int default="5000" typestr="N" optional hidden
+
+option "db-max-passive-wal-pages"   - "Maximum number of pages in WAL to trigger a passive checkpoint"
+       int default="20000" typestr="N" optional hidden
+
+option "db-max-wal-restart-pages"   - "Maximum number of pages in WAL before forcing a WAL restart"
+       int default="20000" typestr="N" optional hidden
+
+option "db-idle-restart"            - "Interval to force a WAL restart when idle"
+       int default="60" typestr="sec" optional hidden
+
+option "db-busy-timeout"            - "SQLite database busy timeout"
+       int default="20" typestr="sec" optional hidden
+
+option "db-max-mmapsize"            - "SQLite mmap size (0 to disable)"
+       int default="2147418112" typestr="N" optional hidden
+
+option "db-no-custom-vfs"              - "Do not use custom SQLite VFS"
+       flag off hidden
+
+option "worker-max-wait"          - "Maximum time to wait before killing a worker"
+       int default="300" typestr="sec" optional hidden
+
+option "worker-max-requests"      - "Maximum number of requests / worker"
+       int default="5000" typestr="N" optional hidden
+
+option "verbose-rebalance"              - "Generate HUGE rebalance logs"
+       flag off hidden
+
+option "verbose-gc"              - "Generate HUGE garbage collector logs"
+       flag off hidden
+
+option "max-pending-user-jobs"      - "Maximum number of concurrent jobs a single user can start"
+       int default="128" typestr="N" optional hidden

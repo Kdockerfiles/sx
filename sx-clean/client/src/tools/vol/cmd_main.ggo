@@ -1,0 +1,15 @@
+package "sxvol"
+args "--no-handle-version --no-handle-error --file-name=cmd_main --func-name=main_cmdline_parser --arg-struct-name=main_args_info"
+usage "sxvol <command> [OPTIONS]..."
+
+purpose "Manages SX volumes and filters"
+
+text "\nAvailable commands:\n\n"
+
+text "  create	    Create a new volume\n"
+text "  rename	    Rename a volume\n"
+text "  modify	    Modify volume settings\n"
+text "  remove	    Remove an empty volume\n"
+text "  filter	    Manage filters\n"
+
+text "\nSee 'sxvol <command> --help' for more information on a specific command.\n"

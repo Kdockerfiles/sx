@@ -1,0 +1,109 @@
+\chapter{Installation / Upgrade}
+
+Skylable \SX is tested on all popular UNIX platforms, including Linux,
+FreeBSD, and OS X. We try to support as many platforms as possible,
+if you have troubles installing, compiling or running our software on
+your platform please let us know.
+
+\section{Minimum requirements}
+The default setup described in this manual requires 2GB of RAM available
+for each node. \SX can also be installed on machines with lower resources,
+such as embedded ARM devices, but that requires advanced configuration not
+covered by the manual.
+
+\section{Binary packages}
+The binary packages are available for all popular Linux distributions,
+and this is the easiest and recommended way to install Skylable \SX.
+Please visit\\
+\url{http://www.skylable.com/download/sx}\\
+for the up-to-date list of supported distributions and installation instructions.
+
+\section{Source code}
+In order to compile \SX from source, you will need the following packages to
+be installed together with their development versions:
+\begin{itemize}
+    \item OpenSSL/NSS
+    \item libcurl $\ge$ 7.34.0 (otherwise the embedded one will be used)
+    \item zlib
+    \item FUSE $\ge$ 2.7.0 (otherwise sxfs will not be compiled)
+\end{itemize}
+For example, on Debian run:
+\begin{lstlisting}
+# apt-get install libssl-dev libcurl4-openssl-dev libz-dev fuse libfuse-dev
+\end{lstlisting}
+
+\subsection{Compilation}
+The software is based on autoconf, and you can just perform the standard
+installation steps. The following commands install all the software in
+\path{/usr/local}:
+\begin{lstlisting}
+$ ./configure && make
+# make install
+\end{lstlisting}
+The rest of the manual assumes that \SX was installed from a binary
+package, so some paths may be different.
+
+\section{Upgrade existing cluster}
+To take advantage of new features and improvements, it's recommended to
+keep the cluster software up to date. The upgrade procedure has been
+simplified and automated as much as possible to allow a smooth update
+of a live cluster.
+\subsection{Upgrading a single node}
+It is recommended to upgrade one node at a time. In case of a problem, the
+other nodes will stay unaffected and will be able to serve data to the
+clients.
+First install the latest version of Skylable \SX in the same way as the
+previous deployment. Then run the following command:
+\begin{lstlisting}
+# sxsetup --upgrade
+Updating sxhttpd.conf (vts)
+Upgrading local node...
+[sx_storage_upgrade]: Performing integrity check on /var/lib/sxserver/storage
+[sx_storage_upgrade]: Integrity check completed in 0s
+[sx_storage_upgrade]: Upgrading local databases, this may take a while...
+[sx_storage_upgrade]: Committing changes
+[sx_storage_upgrade]: Schema upgrade completed in 0s
+[sx_storage_upgrade]: Successfully upgraded all DBs
+[sx_storage_upgrade]: Storage closed in 1s
+[upgrade_node]: Storage is up to date
+Starting SX.fcgi
+Starting sxhttpd
+SX node started successfully
+Moving remote sxsetup.conf into cluster settings...
+
+More nodes in the cluster require upgrading.
+\end{lstlisting}
+% Could not upgrade the remote cluster data at this point. Please run
+% sxsetup --upgrade again when all other nodes are locally upgraded and
+% online. The cluster should also get upgraded automatically after the
+% last node is locally upgraded.
+
+The above is the expected output when not all of the nodes have been
+updated yet. After upgrading the entire cluster the expected output is:
+\begin{lstlisting}
+# sxsetup --upgrade
+Local node is up-to-date.
+Versions:
+	192.168.1.101: 2.2 (2.2)
+	192.168.1.102: 2.2 (2.2)
+	192.168.1.103: 2.2 (2.2)
+Cluster already fully upgraded
+
+All components of the cluster are up-to-date!
+\end{lstlisting}
+\textbf{IMPORTANT:} Due to substantial changes and improvements, all
+nodes running \SX 1.x must be upgraded to 2.x otherwise some operations will
+only work in read-only mode.
+% When running \verb+sxsetup --upgrade+ on the last node of the cluster,
+% it should also start the upgrade of the remote cluster data:
+%\begin{lstlisting}
+%# sxsetup --upgrade
+%Upgrading local node...
+%[...]
+%Remote upgrade started. You can monitor the progress by running:
+%/usr/sbin/sxadm cluster --info sx://admin@mycluster
+%\end{lstlisting}
+%The remote upgrade process can take some time, depending on the amount of
+%data in the cluster. The progress can be monitored with
+%\verb+sxadm cluster --info+ as instructed above. When it's done, running
+%\verb+sxsetup --upgrade+ on any node should report the cluster is up to date:
