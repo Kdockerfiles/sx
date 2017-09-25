@@ -5,19 +5,19 @@
 # Usage
 
 ```sh
-$ docker run kdockerfiles/sx:2.3-1
+$ docker run kdockerfiles/sx:2.3-2
 ```
 
 ## Available environment variables
 
 ```sh
-$ docker run kdockerfiles/sx:2.3-1 -e SX_CLUSTER_NAME=my_sx_cluster
+$ docker run kdockerfiles/sx:2.3-2 -e SX_CLUSTER_NAME=my_sx_cluster
 ```
 
 Sets the name of the cluster (default: `sx`).
 
 ```sh
-$ docker run kdockerfiles/sx:2.3-1 -e SX_MAX_SIZE=1T
+$ docker run kdockerfiles/sx:2.3-2 -e SX_MAX_SIZE=1T
 ```
 
 Maximum size of the single node storage (default: 101G).
