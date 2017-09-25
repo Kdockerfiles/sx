@@ -1,4 +1,4 @@
-FROM debian:8.9 AS base
+FROM debian:9.1 AS base
 LABEL maintainer="KenjiTakahashi <kenji.sx>"
 
 RUN apt-get update
@@ -7,6 +7,7 @@ RUN apt-get install --no-install-recommends -y \
     libfcgi \
     libyajl2 \
     libcurl3 \
+    libssl1.0.2 \
     openssl \
     zlib1g \
     expect
@@ -23,7 +24,7 @@ RUN apt-get install --no-install-recommends -y \
     libfcgi-dev \
     libyajl-dev \
     libcurl4-openssl-dev \
-    libssl-dev \
+    libssl1.0-dev \
     zlib1g-dev
 
 COPY sx-clean /tmp/sx/
