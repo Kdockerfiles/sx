@@ -24,7 +24,6 @@ expect > /dev/null <<- DONE
     expect eof
 DONE
 
-    sxserver restart
 else
     sxserver start
 fi
