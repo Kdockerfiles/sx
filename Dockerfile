@@ -41,6 +41,7 @@ FROM base
 
 COPY --from=1 /usr/local /usr/local
 COPY run.sh /usr/local/bin/
+COPY create_user /usr/local/bin/
 
 RUN ldconfig
 

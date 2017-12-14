@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "Must supply non-empty user name"
+    exit 1
+fi
+
+if [ -z "$2" ]; then
+    echo "Must supply non-empty token"
+    exit 2
+fi
+
+source <(grep "SX_CLUSTER_NAME" /usr/local/etc/sxserver/sxsetup.conf)
+
+sxacl useradd "$1" "sx://$SX_CLUSTER_NAME" -b -t admin --force-key "$2" >/dev/null

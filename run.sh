@@ -28,4 +28,9 @@ else
     sxserver start
 fi
 
+if [ -n "$SX_USER" ] && [ -n "$SX_TOKEN" ]; then
+    echo "Creating user '$SX_USER'"
+    create_user "$SX_USER" "$SX_TOKEN"
+fi
+
 sleep infinity
