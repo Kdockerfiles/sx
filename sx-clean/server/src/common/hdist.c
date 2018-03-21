@@ -345,13 +345,13 @@ sxi_hdist_t *sxi_hdist_from_cfg(const void *cfg, unsigned int cfg_len)
 		ret = EINVAL;
 		break;
 	    }
-	    checksum = strtoll(pt, NULL, 0);
-	    if(checksum == LLONG_MAX) {
+	    checksum = strtoull(pt, NULL, 0);
+	    if(checksum == ULLONG_MAX) {
 		critmsg("Internal error: Invalid configuration data (checksum conversion)");
 		ret = EINVAL;
 		break;
 	    }
-	    if(model->checksum != (uint64_t) checksum) {
+	    if(model->checksum != checksum) {
 		critmsg("Internal error: distribution checksum mismatch");
 		ret = EINVAL;
 		break;
